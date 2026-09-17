@@ -20,8 +20,6 @@ long-form handoff and wins on any conflict. Read it first.
 
 ## Open follow-ups
 
-- Em dash sweep in the UI copy (Trent's house rule; the handoff build still has some).
-- OG image + meta tags for link previews.
-- Link from the tront.xyz games or projects page.
+- Done 2026-09-17: em dash sweep, OG image (`tools/og-shot.mjs`, chunk framing), meta tags, games page card.
 - Then the real work: HANDOFF.md section 20 (materials, chunk presentation, perf
   instrumentation, compression, authoring tooling).

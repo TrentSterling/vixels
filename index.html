@@ -4,7 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="dark light">
-<title>Vixels Forge 02.1 — Chunk & Contour Bench</title>
+<title>Vixels Forge 02.1: Chunk & Contour Bench</title>
+<meta name="description" content="Vixels: vector materials for voxel surfaces. Whole contours compiled into data textures and evaluated analytically in a WebGL2 shader. One HTML file, no network.">
+<meta property="og:type" content="website"><meta property="og:title" content="Vixels: vector materials for voxel surfaces">
+<meta property="og:description" content="Analytic contours in data textures, not bitmaps. Twelve original vector materials on a voxel chunk, infinite magnification, grid-invariant. One HTML file, no build.">
+<meta property="og:url" content="https://tront.xyz/vixels/"><meta property="og:image" content="https://tront.xyz/vixels/og-image.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:type" content="image/png">
+<meta property="og:image:alt" content="A small voxel terrain chunk rendered with analytic vector materials in Vixels Forge.">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Vixels"><meta name="twitter:image" content="https://tront.xyz/vixels/og-image.png">
 <style>
 :root{--bg:#20231f;--rail:#272b25;--line:#41463d;--ink:#e5e8da;--muted:#b0b8a7;--accent:#dfbc60;--button:#363b32;--viewport:#c7ccc4;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg);font-size:13px}
 *{box-sizing:border-box}body{margin:0;height:100dvh;overflow:hidden;display:grid;grid-template-rows:54px minmax(0,1fr) 30px}button,input,select{font:inherit}button{border:1px solid var(--line);color:var(--ink);background:transparent;padding:7px 11px;cursor:pointer;white-space:nowrap}button:hover{background:#3b4036;border-color:#717967}button.active{color:#171c16;background:var(--accent);border-color:var(--accent)}button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:3px}button:disabled{opacity:.4;cursor:default}button,.swatch img{border-radius:2px}select{color:var(--ink);background:var(--bg);border:1px solid var(--line);padding:5px 7px;max-width:160px}input[type=range]{width:100%;accent-color:var(--accent);margin:5px 0}input[type=checkbox]{accent-color:var(--accent)}[hidden]{display:none!important}
@@ -311,7 +318,7 @@ function exportSVG(doc){
  function element(s,extra=''){const fill=doc.palette[s.color];if(s.type==='circle')return `<circle cx="${s.center[0]}" cy="${s.center[1]}" r="${s.radius}" fill="${fill}" ${extra}/>`;if(s.type==='roundrect')return `<rect x="${s.center[0]-s.half[0]}" y="${s.center[1]-s.half[1]}" width="${s.half[0]*2}" height="${s.half[1]*2}" rx="${s.radius}" fill="${fill}" ${extra}/>`;let d;if(s.type==='polygon')d='M '+s.points.map(p=>p.join(' ')).join(' L ')+' Z';else{d='M '+s.segments[0].a.join(' ');for(const e of s.segments){if(e.center){const a=[e.a[0]-e.center[0],e.a[1]-e.center[1]],b=[e.b[0]-e.center[0],e.b[1]-e.center[1]],r=Math.hypot(...a),sweep=a[0]*b[1]-a[1]*b[0]>0?1:0;d+=` A ${r} ${r} 0 0 ${sweep} ${e.b.join(' ')}`;}else d+=' L '+e.b.join(' ');}d+=' Z';}return `<path d="${d}" fill="${fill}" ${extra}/>`;}
  doc.shapes.forEach((s,i)=>defs.push(`<clipPath id="s${i}" clipPathUnits="userSpaceOnUse">${element(s)}</clipPath>`));
  doc.shapes.forEach(s=>{for(let sy=-1;sy<=1;sy++)for(let sx=-1;sx<=1;sx++)nodes.push(`<g transform="translate(${sx*DIM} ${sy*DIM})">${element(s,s.parent>=0?`clip-path="url(#s${s.parent})"`:'')}</g>`);});
- return `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 ${DIM} ${DIM}"><title>Vixels — original ${doc.preset} vector material</title><defs>${defs.join('')}</defs><rect width="24" height="24" fill="${doc.palette[doc.background]}"/><g transform="translate(0 24) scale(1 -1)">${nodes.join('')}</g></svg>`;
+ return `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 ${DIM} ${DIM}"><title>Vixels: original ${doc.preset} vector material</title><defs>${defs.join('')}</defs><rect width="24" height="24" fill="${doc.palette[doc.background]}"/><g transform="translate(0 24) scale(1 -1)">${nodes.join('')}</g></svg>`;
 }
 
 const MATERIAL_KEYS=Object.keys(PRESET_META);
@@ -788,7 +795,7 @@ let toastTimer;
 function toast(t){$('toast').textContent=t;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').hidden=true,3000);}
 function fail(error){
  const message=error?.stack||String(error);errors.push(message);failed=true;ready=false;
- $('boot').hidden=true;$('error-box').hidden=false;$('error-text').textContent=message;status('Renderer stopped — see diagnostic');
+ $('boot').hidden=true;$('error-box').hidden=false;$('error-text').textContent=message;status('Renderer stopped: see diagnostic');
  console.error(error);
 }
 window.addEventListener('error',e=>{if(e.error)fail(e.error);});
