@@ -17,6 +17,7 @@ try{for(const mode of ['desktop','touch','reduced-motion','save-data']){
  if(repo==='buddy'&&await page.locator('#creditsDialog[open]').count())await page.locator('#closeCredits').click();
  const about=page.locator('#trontAbout'),summary=about.locator(':scope>summary'),panel=about.locator('.tront-about-panel');
  await check(mode+': closed initially, no discovery images or video requests',async()=>{assert.equal(await about.getAttribute('open'),null);assert.equal(await about.locator('img').count(),0);assert.equal(media.length,0)});
+ if(repo==='vixels')await check(mode+': About stays above the complete camera toolbar',async()=>{const trigger=await summary.boundingBox(),toolbar=await page.locator('.camtools').boundingBox();assert.ok(trigger.y+trigger.height<=toolbar.y-5)});
  // SEND DUDES intentionally hides site chrome while its native campaign menu is open.
  if(!await summary.isVisible()&&repo==='senddudes'){const back=page.getByRole('button',{name:/resume|back to battle|close/i}).first();if(await back.isVisible())await back.click();else await page.keyboard.press('Escape');await page.waitForTimeout(300);}
  await check(mode+': open through the native disclosure',async()=>{if(mode==='touch')await summary.tap();else{await summary.focus();await page.keyboard.press('Enter');}await page.waitForTimeout(150);assert.notEqual(await about.getAttribute('open'),null);assert.equal(await about.locator('[data-tront-discovery-game]').count(),4);});
