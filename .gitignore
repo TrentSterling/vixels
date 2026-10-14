@@ -1,3 +1,5 @@
 tools/out/
 .DS_Store
 Thumbs.db
+
+.about-evidence/
